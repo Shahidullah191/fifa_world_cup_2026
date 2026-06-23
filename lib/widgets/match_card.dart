@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../app/themes/app_colors.dart';
@@ -99,11 +98,6 @@ class MatchCard extends StatelessWidget {
   }
 
   Widget _liveBadge() {
-
-    if (kDebugMode) {
-      print('oooooooo${match.isFinished}');
-    }
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
@@ -131,13 +125,6 @@ class MatchCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _dateLabel() {
-    return Text(
-      match.localDate,
-      style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
     );
   }
 
