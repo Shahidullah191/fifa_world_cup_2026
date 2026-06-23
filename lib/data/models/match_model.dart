@@ -62,14 +62,20 @@ class MatchModel {
   }
 
   MatchStatus get status {
-    if (isFinished) return MatchStatus.finished;
-    if (timeElapsed != 'finished' &&
-        timeElapsed.isNotEmpty &&
-        timeElapsed != '0' &&
-        timeElapsed != 'null') {
-      return MatchStatus.live;
+    final elapsed = timeElapsed.toLowerCase().trim();
+
+    if (isFinished || elapsed == 'finished') {
+      return MatchStatus.finished;
     }
-    return MatchStatus.upcoming;
+
+    if (elapsed == 'notstarted' ||
+        elapsed.isEmpty ||
+        elapsed == '0' ||
+        elapsed == 'null') {
+      return MatchStatus.upcoming;
+    }
+
+    return MatchStatus.live;
   }
 
   bool get isLive => status == MatchStatus.live;

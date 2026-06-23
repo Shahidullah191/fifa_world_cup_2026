@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../app/themes/app_colors.dart';
@@ -44,7 +45,8 @@ class MatchCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _stageChip(),
-                if (match.isLive) _liveBadge() else _dateLabel(),
+                //if (match.isLive) _liveBadge() else _dateLabel(),
+                _liveBadge(),
               ],
             ),
             const SizedBox(height: 16),
@@ -97,30 +99,34 @@ class MatchCard extends StatelessWidget {
   }
 
   Widget _liveBadge() {
+
+    if (kDebugMode) {
+      print('oooooooo${match.isFinished}');
+    }
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.live.withValues(alpha: 0.15),
+        color: match.isFinished ? AppColors.win.withValues(alpha: 0.15) : AppColors.live.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 6,
-            height: 6,
-            decoration: const BoxDecoration(
-              color: AppColors.live,
+            width: 6, height: 6,
+            decoration: BoxDecoration(
+              color: match.isFinished ? AppColors.win : AppColors.live,
               shape: BoxShape.circle,
             ),
           ),
           const SizedBox(width: 6),
           Text(
-            match.timeElapsed == 'finished' ? 'FT' : "${match.timeElapsed}'",
-            style: const TextStyle(
+            match.isFinished ? 'Finished' : match.localDate,
+            style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w700,
-              color: AppColors.live,
+              color: match.isFinished ? AppColors.win : AppColors.live,
             ),
           ),
         ],

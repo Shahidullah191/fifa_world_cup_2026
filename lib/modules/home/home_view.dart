@@ -16,6 +16,9 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      // Observe match list so sections update after reload.
+      final _ = controller.repo.matches.length;
+
       if (controller.repo.isLoading.value && controller.repo.matches.isEmpty) {
         return const LoadingShimmer();
       }
@@ -35,12 +38,12 @@ class HomeView extends GetView<HomeController> {
             SliverToBoxAdapter(child: _statsRow()),
             if (controller.liveCount > 0) ...[
               _sectionTitle('🔴 Live Now', controller.liveCount),
-              _matchList(controller.liveMatches.cast<MatchModel>()),
+              _matchList(controller.liveMatches),
             ],
             _sectionTitle('📅 Upcoming', controller.upcomingMatches.length),
-            _matchList(controller.upcomingMatches.cast<MatchModel>()),
+            _matchList(controller.upcomingMatches),
             _sectionTitle('✅ Recent Results', controller.recentResults.length),
-            _matchList(controller.recentResults.cast<MatchModel>()),
+            _matchList(controller.recentResults),
             const SliverToBoxAdapter(child: SizedBox(height: 24)),
           ],
         ),
